@@ -1,31 +1,49 @@
 package chatroom;
 
-import org.eclipse.jetty.websocket.api.*;
-import org.eclipse.jetty.websocket.api.annotations.*;
+import java.net.HttpCookie;
+
+import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
 @WebSocket
 public class ChatWebSocketHandler {
 
-    @SuppressWarnings("unused")
-	private String sender, msg;
+    private String sender, msg;
 
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
-        String username = "User" + Chat.nextUserNumber++;
-        Chat.userUsernameMap.put(user, username);
-        Chat.broadcastMessage(sender = "Server", msg = (username + " joined the chat"));
+    	Chat.users.put(user,this.getCookieByName(user, "username"));
+        Message.broadcastMessage(sender = "Server", msg = (Chat.users.get(user) + " joined the chat"));
     }
 
     @OnWebSocketClose
     public void onClose(Session user, int statusCode, String reason) {
-        String username = Chat.userUsernameMap.get(user);
-        Chat.userUsernameMap.remove(user);
-        Chat.broadcastMessage(sender = "Server", msg = (username + " left the chat"));
+        String username = Chat.users.get(user);
+        Chat.users.remove(user);
+        Message.broadcastMessage(sender = "Server", msg = (username + " left the chat"));
     }
 
     @OnWebSocketMessage
     public void onMessage(Session user, String message) {
-        Chat.broadcastMessage(sender = Chat.userUsernameMap.get(user), msg = message);
+        Message.broadcastMessage(sender = Chat.users.get(user), msg = message);
     }
+    
+
+    private String getCookieByName(Session user,String name) {
+    	
+    if (user.getUpgradeRequest().getCookies() == null) {
+        return null;
+    }
+    for (HttpCookie cookie : user.getUpgradeRequest().getCookies()){
+    	if (cookie.getName().equals(name)) {
+            return cookie.getValue();
+        }
+    }
+    return null;
+}
+
 
 }

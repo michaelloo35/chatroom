@@ -1,3 +1,5 @@
+package spark.template.velocity;
+
 /*
  * Copyright 2013 Per Wendel
  *
@@ -14,7 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package spark.template.velocity;
 
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
