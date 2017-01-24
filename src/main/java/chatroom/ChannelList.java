@@ -1,18 +1,23 @@
 package chatroom;
+import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.eclipse.jetty.websocket.api.Session;
 public class ChannelList {
 	private ConcurrentLinkedQueue<String> channels;
 
+	
+	ChannelList() {
+		this.channels = new ConcurrentLinkedQueue<String>();
+		this.channels.add("chatbot");
+	}
+	
 	public ConcurrentLinkedQueue<String> getChannels() {
 		return channels;
 	}
 
 	public void setChannels(ConcurrentLinkedQueue<String> channels) {
 		this.channels = channels;
-	}
-
-	ChannelList() {
-		this.channels = new ConcurrentLinkedQueue<String>();
 	}
 
 	public void joinOrCreateChannel(String channel) {
@@ -24,9 +29,10 @@ public class ChannelList {
 		this.channels.remove(channel);
 	}
 
-	public void refreshChannels() {
+	public void refreshChannels(Map<Session, User> users) {
 		for (String channel : this.channels)
-			if (Chat.users.values().stream().noneMatch(x -> channel.equals(x.getCurrentChannel())))
+			if (!channel.equals("chatbot"))
+				if (users.values().stream().noneMatch(x -> channel.equals(x.getCurrentChannel())))
 				removeChannel(channel);
 	}
 	

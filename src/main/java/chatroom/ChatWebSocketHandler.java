@@ -12,33 +12,48 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 @WebSocket
 public class ChatWebSocketHandler {
 
+	@SuppressWarnings("unused")
 	private String sender, msg;
-
+	private Chat chat;
+	private ChatBot bot;
+	
+	
+	public ChatWebSocketHandler (Chat chat){
+		this.chat = chat;
+		this.bot = new ChatBot();
+	}
 	@OnWebSocketConnect
 	public void onConnect(Session user) throws Exception {
 		String channel = this.getCookieByName(user, "currentChannel");
-		Chat.users.put(user, new User(this.getCookieByName(user, "username"), channel));
-		Chat.channels.joinOrCreateChannel(channel);
+		chat.getUsers().put(user, new User(this.getCookieByName(user, "username"), channel));
+		chat.getChannels().joinOrCreateChannel(channel);
 		Message.broadcastMessage(sender = "Server",
-				msg = (Chat.users.get(user).getUsername() + " joined the channel " + channel),channel);
+				msg = (chat.getUsers().get(user).getUsername() + " joined the channel " + channel),channel,chat);
+		if (channel.equals("chatbot"))
+			Message.broadcastMessage("ChatBot", msg = bot.Response("greeting"), "chatbot", chat);
+			
 	}
 
 	@OnWebSocketClose
 	public void onClose(Session user, int statusCode, String reason) {
-		String username = Chat.users.get(user).getUsername();
-		String channel = Chat.users.get(user).getCurrentChannel();
-		Chat.users.remove(user);
+		String username = chat.getUsers().get(user).getUsername();
+		String channel = chat.getUsers().get(user).getCurrentChannel();
+		chat.getUsers().remove(user);
 		Message.broadcastMessage(sender = "Server",
-				msg = (username + " left the channel " + channel),channel);
-		Chat.channels.refreshChannels();
+				msg = (username + " left the channel " + channel),channel,chat);
+		chat.getChannels().refreshChannels(chat.getUsers());
 	}
 
 	@OnWebSocketMessage
 	public void onMessage(Session user, String message) {
 		String channel = this.getCookieByName(user, "currentChannel");
-		Message.broadcastMessage(sender = Chat.users.get(user).getUsername(), msg = message,channel);
+		Message.broadcastMessage(sender = chat.getUsers().get(user).getUsername(), msg = message,channel,chat);
+		if (channel.equals("chatbot"))
+			Message.broadcastMessage("ChatBot", msg = bot.Response(message), "chatbot", chat);
 	}
 
+	
+	
 	private String getCookieByName(Session user, String name) {
 		List<HttpCookie> userCookies = user.getUpgradeRequest().getCookies();
 		if (userCookies == null)

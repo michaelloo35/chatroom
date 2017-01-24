@@ -6,7 +6,6 @@ import static j2html.TagCreator.p;
 import static j2html.TagCreator.span;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -16,14 +15,14 @@ import org.json.JSONObject;
 public class Message {
 	// Sends a message from one user to all users, along with a list of current
 	// usernames on users channel
-	public static void broadcastMessage(String sender, String message, String channel) {
+	public static void broadcastMessage(String sender, String message, String channel, Chat chat) {
 		LinkedList<String> userlist = new LinkedList<String>();
-		Chat.users.values().stream().filter(x -> x.getCurrentChannel().equals(channel))
+		chat.getUsers().values().stream().filter(x -> x.getCurrentChannel().equals(channel))
 				.forEach(x -> userlist.add(x.getUsername()));
 
-		Chat.users.keySet().stream().filter(Session::isOpen).forEach(session -> {
+		chat.getUsers().keySet().stream().filter(Session::isOpen).forEach(session -> {
 			try {
-				if (Chat.users.get(session).getCurrentChannel().equals(channel)) {
+				if (chat.getUsers().get(session).getCurrentChannel().equals(channel)) {
 					session.getRemote()
 							.sendString(String.valueOf(
 									new JSONObject().put("userMessage", createHtmlMessageFromSender(sender, message))
