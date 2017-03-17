@@ -26,12 +26,12 @@ public class Weather {
     @Override
     public String toString(){
         return "Current weather in " + this.cityName +
-                " " + this.info +
-                " temperature: " + this.temp +
-                " max: " + this.tempMax +
-                " min. temperature: " + this.tempMin +
-                " pressure: " + this.pressure +
-                " humidity: " + this.humidity;
+                " : " + this.info +
+                " temperature : " + this.temp + "C" +
+                " max : " + this.tempMax + "C" +
+                " min : " + this.tempMin + "C" +
+                " pressure: " + this.pressure + "hPa" +
+                " humidity: " + this.humidity + "%";
     }
     
     

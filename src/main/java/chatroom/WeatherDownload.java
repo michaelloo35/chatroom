@@ -24,7 +24,6 @@ public class WeatherDownload {
 	public void setWeather(Weather weather) {
 		this.weather = weather;
 	}
-
 	private final String apiKey = "83d28b738b2ea179816e95b1d46572af";
 
 	 public WeatherDownload() {
