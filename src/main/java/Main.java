@@ -17,7 +17,6 @@ public class Main {
 		staticFileLocation("/public");
 		String layout = "templates/layout.vtl";
 		webSocket("/chat", new ChatWebSocketHandler(chat));
-		init();
 		get("/", (request, response) -> {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("username", request.cookie("username"));
@@ -64,7 +63,7 @@ public class Main {
 			model.put("template", "templates/channels.vtl");
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
-		
+		init();
 	}
 	static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
