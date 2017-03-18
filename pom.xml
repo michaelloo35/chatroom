@@ -3,7 +3,6 @@
   <groupId>com.agh.chatroom</groupId>
   <artifactId>chatroom</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>chatroom</name>
   
 	<dependencies>
   		<dependency>
