@@ -1,5 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
+  
   <groupId>com.agh.chatroom</groupId>
   <artifactId>chatroom</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -7,6 +9,8 @@
           <maven.compiler.source>1.8</maven.compiler.source>
           <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
+  
+  
 	<dependencies>
   		<dependency>
    		 <groupId>com.sparkjava</groupId> 
@@ -84,7 +88,7 @@
     			<configuration>
         			<jdkVersion>1.8</jdkVersion>
         			<!-- Use your own application name -->
-        			<appName>spark-heroku-simple-chat</appName> 
+        			<appName>myownchatroom</appName> 
        				<processTypes>
             			<!-- Tell Heroku how to launch your application -->
             			<!-- You might have to remove the ./ in front   -->
