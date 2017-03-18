@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WebsSockets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<p style="text-align: center;"><span style="font-size:24px;"><span style="font-family:comic sans ms,cursive;"><strong>You are speaking on $channel &nbsp;</strong></span></span></p>
+	<a href="/change">Change Username</a>            <a href="/channels">Change Channel</a>
+    <div id="chatControls">
+        <input id="message" placeholder="Type your message">
+        <button id="send">Send</button>
+    </div>
+    <ul id="userlist"> <!-- Built by JS --> </ul>
+    <div id="chat">    <!-- Built by JS --> </div>
+    <script src="websocketDemo.js"></script>
+</body>
+</html>

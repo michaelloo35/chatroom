@@ -1,0 +1,22 @@
+#if ($currentChannel)
+  You are about to proceed to channel : $currentChannel
+  <form action="/chat" method="post">
+    <button type="submit">Start chatting</button>
+  </form>
+#else
+<form action="/channels" method="post">
+    <label for="channel">Choose your channel</label>
+    <input id="channel" name="channel" type="text">
+    <button type="submit">Join/create</button>
+  </form>
+  Active channels List:
+  <ul>
+    #foreach ($x in $channels.getChannels())
+      <li>$x</li>
+    #end
+  </ul>
+#end
+<a href="/">Return to home page</a>
+
+
+

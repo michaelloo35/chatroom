@@ -1,4 +1,5 @@
 
+
 import static spark.Spark.*;
 
 import java.util.HashMap;
@@ -63,7 +64,6 @@ public class Main {
 			model.put("template", "templates/channels.vtl");
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
-		init();
 	}
 	static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();

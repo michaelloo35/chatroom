@@ -1,0 +1,14 @@
+#if ($username)
+  Welcome $username
+  <form action="/channels" method="post">
+    <button type="submit">Proceed to channel selection</button>
+  </form>
+#else
+  <form action="/welcome" method="post">
+    <label for="username">Your name</label>
+    <input id="username" name="username" type="text">
+    <button type="submit">Submit name</button>
+  </form>
+#end
+
+<a href="/">Return to home page</a>
