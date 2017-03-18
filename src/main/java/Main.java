@@ -1,4 +1,4 @@
-package chatroom;
+
 import static spark.Spark.port;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -7,6 +7,9 @@ import static spark.Spark.webSocket;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import chatroom.Chat;
+import chatroom.ChatWebSocketHandler;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
