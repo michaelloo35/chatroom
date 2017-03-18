@@ -1,9 +1,5 @@
 
-import static spark.Spark.port;
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.staticFileLocation;
-import static spark.Spark.webSocket;
+import static spark.Spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +17,7 @@ public class Main {
 		staticFileLocation("/public");
 		String layout = "templates/layout.vtl";
 		webSocket("/chat", new ChatWebSocketHandler(chat));
-		
+		init();
 		get("/", (request, response) -> {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("username", request.cookie("username"));
@@ -68,7 +64,7 @@ public class Main {
 			model.put("template", "templates/channels.vtl");
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
-
+		
 	}
 	static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
