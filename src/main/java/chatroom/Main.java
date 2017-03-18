@@ -1,5 +1,5 @@
 package chatroom;
-
+import static spark.Spark.port;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
@@ -13,7 +13,7 @@ import spark.template.velocity.VelocityTemplateEngine;
 public class Main {
 
 	public static void main(String[] args) {
-		
+		port(getHerokuAssignedPort());
 		Chat chat = new Chat();
 		staticFileLocation("/public");
 		String layout = "templates/layout.vtl";
