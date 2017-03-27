@@ -1,3 +1,3 @@
 # chatroom
-chatroom project using javaspark library
-deployed on https://myownchatroom.herokuapp.com/
+chatroom project using javaspark library.  
+Application deployed on https://myownchatroom.herokuapp.com/  
